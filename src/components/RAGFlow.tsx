@@ -146,12 +146,12 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="w-full">
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl font-bold text-center">
+        <h2 className="text-2xl font-bold text-center bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm inline-block mx-auto">
           Retrieval-Augmented Generation (RAG) Flow
         </h2>
-        <p className="text-muted-foreground text-center max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center max-w-2xl mx-auto bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm">
           This diagram shows how RAG enhances AI responses by retrieving relevant context from a document database.
         </p>
         
@@ -159,7 +159,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
           <Button 
             onClick={isPlaying ? handlePause : handlePlay}
             variant="outline"
-            className="gap-2"
+            className="gap-2 bg-background/90 backdrop-blur-sm"
           >
             {isPlaying ? "Pause" : activeStep === steps.length - 1 ? "Restart" : "Play"} 
             {isPlaying ? null : <Play className="h-4 w-4" />}
@@ -170,6 +170,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
             variant="outline"
             size="icon"
             disabled={activeStep === 0}
+            className="bg-background/90 backdrop-blur-sm"
           >
             <RefreshCw className="h-4 w-4" />
           </Button>
@@ -180,7 +181,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto pb-6">
+      <div className="overflow-x-auto pb-6 w-full">
         <div className="flex gap-4 min-w-max p-4">
           {steps.map((step, index) => {
             const StepIcon = step.icon;
@@ -200,12 +201,12 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                   transition={{ duration: 0.3 }}
                   className="flex flex-col"
                 >
-                  <Card className={`w-72 h-full ${
+                  <Card className={`w-72 h-full backdrop-blur-sm ${
                     isActive 
-                      ? "ring-2 ring-primary shadow-lg" 
+                      ? "ring-2 ring-primary shadow-lg bg-background/90" 
                       : isPast 
-                        ? "bg-muted/40" 
-                        : ""
+                        ? "bg-background/80" 
+                        : "bg-background/70"
                   }`}>
                     <CardContent className="p-6 flex flex-col h-full">
                       <div className="flex justify-between items-center mb-4">
@@ -230,7 +231,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                       
                       <Separator className="my-2" />
                       
-                      <div className="bg-muted/50 rounded-md p-2 mt-auto">
+                      <div className="bg-muted/80 rounded-md p-2 mt-auto">
                         <p className="text-xs font-mono overflow-hidden text-ellipsis">
                           {step.sampleData}
                         </p>

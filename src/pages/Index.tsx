@@ -37,9 +37,9 @@ const Index = () => {
   };
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <div className="flex min-h-screen w-full">
-        {/* Matrix Rain Background */}
+        {/* Matrix Rain Background with adjusted opacity */}
         <MatrixRain 
           fontSize={16}
           color="#8b5cf6"
@@ -67,7 +67,7 @@ const Index = () => {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
                   Ask the Oracle
                 </h1>
-                <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
+                <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm">
                   Upload your documents and get instant, accurate answers powered by wisdom from beyond. 
                   Ask in natural language and receive enlightened responses.
                 </p>
@@ -95,14 +95,14 @@ const Index = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
-                    className="mt-12 text-center text-muted-foreground"
+                    className="mt-12 text-center bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm text-foreground"
                   >
                     <p>Ask the Oracle a question to receive wisdom</p>
                   </motion.div>
                 )}
               </div>
               
-              {/* RAG Flow Section */}
+              {/* RAG Flow Section - Now with full width */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -110,21 +110,23 @@ const Index = () => {
                 className="w-full mt-16 pt-8 border-t border-border/40"
               >
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl font-semibold mb-2">How The Oracle Works</h2>
-                  <p className="text-muted-foreground">
+                  <h2 className="text-2xl font-semibold mb-2 bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm inline-block">How The Oracle Works</h2>
+                  <p className="text-muted-foreground bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm max-w-2xl mx-auto">
                     This diagram shows how The Oracle uses Retrieval-Augmented Generation to enhance answers with your documents.
                   </p>
                 </div>
-                <RAGFlow autoPlay={false} />
+                <div className="w-full overflow-x-auto">
+                  <RAGFlow autoPlay={false} />
+                </div>
                 
                 <div className="mt-16 max-w-3xl mx-auto">
-                  <h2 className="text-2xl font-semibold mb-4">Why RAG Matters</h2>
-                  <p className="text-muted-foreground mb-4">
+                  <h2 className="text-2xl font-semibold mb-4 bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm inline-block">Why RAG Matters</h2>
+                  <p className="text-muted-foreground mb-4 bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm">
                     RAG systems combine the knowledge from your documents with the intelligence of large language models. 
                     This gives you the best of both worlds: accurate, contextual answers based on your specific content.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div className="bg-accent/30 p-6 rounded-lg backdrop-blur-sm">
+                    <div className="bg-accent/80 p-6 rounded-lg backdrop-blur-sm border border-border/50">
                       <h3 className="font-medium mb-2">Benefits</h3>
                       <ul className="space-y-2 text-sm">
                         <li>• Answers grounded in your actual documents</li>
@@ -133,7 +135,7 @@ const Index = () => {
                         <li>• Up-to-date knowledge not limited to LLM training data</li>
                       </ul>
                     </div>
-                    <div className="bg-accent/30 p-6 rounded-lg backdrop-blur-sm">
+                    <div className="bg-accent/80 p-6 rounded-lg backdrop-blur-sm border border-border/50">
                       <h3 className="font-medium mb-2">Applications</h3>
                       <ul className="space-y-2 text-sm">
                         <li>• Company knowledge bases and documentation</li>
@@ -154,20 +156,20 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 <div className="flex flex-col items-center text-center">
-                  <h2 className="text-xl font-semibold mb-4 text-foreground">Connect With Me</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-foreground bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm inline-block">Connect With Me</h2>
                   <div className="flex flex-wrap justify-center gap-4 mb-6">
                     <a 
                       href="https://www.linkedin.com/in/abhinavneni/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm"
                     >
                       <Linkedin className="h-5 w-5" />
                       <span>LinkedIn</span>
                     </a>
                     <a 
                       href="mailto:neni.abhinav@gmail.com" 
-                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm"
                     >
                       <Mail className="h-5 w-5" />
                       <span>Email</span>
@@ -176,7 +178,7 @@ const Index = () => {
                       href="https://github.com/sap156" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm"
                     >
                       <Github className="h-5 w-5" />
                       <span>GitHub</span>
@@ -185,13 +187,13 @@ const Index = () => {
                       href="https://saiparvathaneni.medium.com/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm"
                     >
                       <ExternalLink className="h-5 w-5" />
                       <span>Medium Blog</span>
                     </a>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm">
                     © {new Date().getFullYear()} Created by Sai Abhinav Parvathaneni
                   </p>
                 </div>
