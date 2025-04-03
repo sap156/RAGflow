@@ -11,6 +11,8 @@ import { Header } from "@/components/Header";
 import { motion } from "framer-motion";
 import { RAGFlow } from "@/components/RAGFlow";
 import { Linkedin, Mail, Github, ExternalLink } from "lucide-react";
+import MatrixRain from "@/components/MatrixRain";
+import { FileUpload } from "@/components/FileUpload";
 
 const Index = () => {
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -37,13 +39,22 @@ const Index = () => {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
+        {/* Matrix Rain Background */}
+        <MatrixRain 
+          fontSize={16}
+          color="#8b5cf6"
+          characters="01ABLEORCΛ"
+          fadeOpacity={0.12}
+          speed={0.8}
+        />
+        
         <Sidebar>
           <SidebarContent>
             <History onSelectQuestion={handleSearch} />
           </SidebarContent>
         </Sidebar>
         
-        <main className="flex-1 pt-16 pb-12">
+        <main className="flex-1 pt-16 pb-12 relative z-10">
           <Header />
           <div className="container px-4 md:px-6 max-w-6xl mx-auto">
             <div className="flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
@@ -53,17 +64,30 @@ const Index = () => {
                 transition={{ duration: 0.5 }}
                 className="text-center mb-8 md:mb-12"
               >
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                  Ask anything about your documents
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
+                  Ask the Oracle
                 </h1>
                 <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
-                  Get instant, accurate answers powered by your own content. Ask questions in natural language and get comprehensive responses.
+                  Upload your documents and get instant, accurate answers powered by wisdom from beyond. 
+                  Ask in natural language and receive enlightened responses.
                 </p>
               </motion.div>
 
               <div className="w-full max-w-3xl mx-auto">
+                {/* File Upload Component */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="mb-6"
+                >
+                  <FileUpload />
+                </motion.div>
+                
+                {/* Search Box */}
                 <SearchBox onSearch={handleSearch} loading={loading} />
                 
+                {/* Answer Card */}
                 <AnswerCard answer={answer} />
                 
                 {!answer && !loading && (
@@ -73,7 +97,7 @@ const Index = () => {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mt-12 text-center text-muted-foreground"
                   >
-                    <p>Ask a question to get started</p>
+                    <p>Ask the Oracle a question to receive wisdom</p>
                   </motion.div>
                 )}
               </div>
@@ -86,9 +110,9 @@ const Index = () => {
                 className="w-full mt-16 pt-8 border-t border-border/40"
               >
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl font-semibold mb-2">How It Works</h2>
+                  <h2 className="text-2xl font-semibold mb-2">How The Oracle Works</h2>
                   <p className="text-muted-foreground">
-                    This diagram shows how Retrieval-Augmented Generation enhances answers with your documents.
+                    This diagram shows how The Oracle uses Retrieval-Augmented Generation to enhance answers with your documents.
                   </p>
                 </div>
                 <RAGFlow autoPlay={false} />
@@ -100,7 +124,7 @@ const Index = () => {
                     This gives you the best of both worlds: accurate, contextual answers based on your specific content.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div className="bg-accent/30 p-6 rounded-lg">
+                    <div className="bg-accent/30 p-6 rounded-lg backdrop-blur-sm">
                       <h3 className="font-medium mb-2">Benefits</h3>
                       <ul className="space-y-2 text-sm">
                         <li>• Answers grounded in your actual documents</li>
@@ -109,7 +133,7 @@ const Index = () => {
                         <li>• Up-to-date knowledge not limited to LLM training data</li>
                       </ul>
                     </div>
-                    <div className="bg-accent/30 p-6 rounded-lg">
+                    <div className="bg-accent/30 p-6 rounded-lg backdrop-blur-sm">
                       <h3 className="font-medium mb-2">Applications</h3>
                       <ul className="space-y-2 text-sm">
                         <li>• Company knowledge bases and documentation</li>
