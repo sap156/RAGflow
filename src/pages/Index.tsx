@@ -9,6 +9,8 @@ import { AnswerCard } from "@/components/AnswerCard";
 import { History } from "@/components/History";
 import { Header } from "@/components/Header";
 import { motion } from "framer-motion";
+import { RAGFlow } from "@/components/RAGFlow";
+import { Linkedin, Mail, Github, ExternalLink } from "lucide-react";
 
 const Index = () => {
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -75,6 +77,101 @@ const Index = () => {
                   </motion.div>
                 )}
               </div>
+              
+              {/* RAG Flow Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="w-full mt-16 pt-8 border-t border-border/40"
+              >
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-semibold mb-2">How It Works</h2>
+                  <p className="text-muted-foreground">
+                    This diagram shows how Retrieval-Augmented Generation enhances answers with your documents.
+                  </p>
+                </div>
+                <RAGFlow autoPlay={false} />
+                
+                <div className="mt-16 max-w-3xl mx-auto">
+                  <h2 className="text-2xl font-semibold mb-4">Why RAG Matters</h2>
+                  <p className="text-muted-foreground mb-4">
+                    RAG systems combine the knowledge from your documents with the intelligence of large language models. 
+                    This gives you the best of both worlds: accurate, contextual answers based on your specific content.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div className="bg-accent/30 p-6 rounded-lg">
+                      <h3 className="font-medium mb-2">Benefits</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Answers grounded in your actual documents</li>
+                        <li>• Reduced hallucinations and fabricated information</li>
+                        <li>• Citations to verify information sources</li>
+                        <li>• Up-to-date knowledge not limited to LLM training data</li>
+                      </ul>
+                    </div>
+                    <div className="bg-accent/30 p-6 rounded-lg">
+                      <h3 className="font-medium mb-2">Applications</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Company knowledge bases and documentation</li>
+                        <li>• Legal and compliance document search</li>
+                        <li>• Research paper and academic assistance</li>
+                        <li>• Technical support and troubleshooting</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              {/* Footer */}
+              <motion.footer 
+                className="mt-20 pt-8 border-t border-border/40 w-full"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <h2 className="text-xl font-semibold mb-4 text-foreground">Connect With Me</h2>
+                  <div className="flex flex-wrap justify-center gap-4 mb-6">
+                    <a 
+                      href="https://www.linkedin.com/in/abhinavneni/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Linkedin className="h-5 w-5" />
+                      <span>LinkedIn</span>
+                    </a>
+                    <a 
+                      href="mailto:neni.abhinav@gmail.com" 
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Mail className="h-5 w-5" />
+                      <span>Email</span>
+                    </a>
+                    <a 
+                      href="https://github.com/sap156" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Github className="h-5 w-5" />
+                      <span>GitHub</span>
+                    </a>
+                    <a 
+                      href="https://saiparvathaneni.medium.com/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <ExternalLink className="h-5 w-5" />
+                      <span>Medium Blog</span>
+                    </a>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} Created by Sai Abhinav Parvathaneni
+                  </p>
+                </div>
+              </motion.footer>
             </div>
           </div>
         </main>
