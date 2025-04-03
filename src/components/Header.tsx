@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
@@ -18,6 +19,9 @@ export const Header = () => {
         </motion.div>
         
         <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/rag-demo">RAG Flow</Link>
+          </Button>
           <Button variant="ghost" size="sm">About</Button>
           <Button variant="ghost" size="sm">Help</Button>
         </div>
