@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { uploadFile } from "../services/api";// or your relative path
+
+
 
 export const FileUpload = () => {
   const [uploading, setUploading] = useState(false);
@@ -15,29 +18,31 @@ export const FileUpload = () => {
     uploadFiles(files);
   };
   
-  const uploadFiles = async (files: FileList) => {
-    setUploading(true);
-    
-    try {
-      // Placeholder for backend integration
-      // Simulate upload delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast({
-        title: "Files uploaded successfully",
-        description: `Uploaded ${files.length} document(s)`,
-      });
-    } catch (error) {
-      console.error("Error uploading files:", error);
-      toast({
-        title: "Upload failed",
-        description: "There was an error uploading your documents",
-        variant: "destructive",
-      });
-    } finally {
-      setUploading(false);
+
+const uploadFiles = async (files: FileList) => {
+  setUploading(true);
+
+  try {
+    for (let i = 0; i < files.length; i++) {
+      await uploadFile(files[i]);
     }
-  };
+
+    toast({
+      title: "Files uploaded successfully",
+      description: `Uploaded ${files.length} document(s)`,
+    });
+  } catch (error) {
+    console.error("Error uploading files:", error);
+    toast({
+      title: "Upload failed",
+      description: "There was an error uploading your documents",
+      variant: "destructive",
+    });
+  } finally {
+    setUploading(false);
+  }
+};
+
   
   return (
     <div className="w-full">

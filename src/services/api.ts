@@ -1,41 +1,60 @@
 
-import { Answer, Question, QuestionRequest } from "../types/rag";
+// backend URL
+const BASE_URL = "http://localhost:5050"; // update if needed
 
-// Base API URL - adjust this to your Flask API URL
-const API_URL = "http://localhost:5000"; // Change this to your actual API URL
+export const uploadFile = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
 
-export const askQuestion = async (question: string): Promise<Answer> => {
-  try {
-    const response = await fetch(`${API_URL}/ask`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ question } as QuestionRequest),
-    });
+  const res = await fetch(`${BASE_URL}/upload`, {
+    method: "POST",
+    body: formData,
+  });
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error asking question:", error);
-    throw error;
+  if (!res.ok) {
+    throw new Error("Failed to upload file");
   }
+
+  return res.json(); // { message, chunks }
 };
 
-export const getHistory = async (): Promise<Question[]> => {
-  try {
-    const response = await fetch(`${API_URL}/history`);
+export const askQuestion = async (question: string) => {
+  const res = await fetch(`${BASE_URL}/ask`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching history:", error);
-    throw error;
+  if (!res.ok) {
+    throw new Error("Failed to get answer");
   }
+
+  return res.json(); // { answer, sources, steps }
+};
+
+export const getHistory = async () => {
+  const res = await fetch("http://localhost:5050/history");
+  if (!res.ok) {
+    throw new Error("Failed to fetch history");
+  }
+  return res.json(); // You can format this on the backend too
+};
+
+export const getAnswer = async (question: string) => {
+  const response = await fetch(`${BASE_URL}/ask`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ question }),
+  });
+
+  const data = await response.json();
+  console.log("RAG response:", data); // 👈 See if steps have value
+
+  if (!response.ok) {
+    throw new Error(data.error || "Failed to get answer");
+  }
+
+  return data;
 };

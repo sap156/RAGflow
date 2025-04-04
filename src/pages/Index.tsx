@@ -4,26 +4,73 @@ import { askQuestion } from "../services/api";
 import { Answer } from "../types/rag";
 import { useToast } from "@/components/ui/use-toast";
 import { SidebarProvider, Sidebar, SidebarContent } from "@/components/ui/sidebar";
-import { SearchBox } from "@/components/SearchBox";
 import { AnswerCard } from "@/components/AnswerCard";
 import { History } from "@/components/History";
 import { Header } from "@/components/Header";
 import { motion } from "framer-motion";
-import { RAGFlow } from "@/components/RAGFlow";
 import { Linkedin, Mail, Github, ExternalLink } from "lucide-react";
 import MatrixRain from "@/components/MatrixRain";
 import { FileUpload } from "@/components/FileUpload";
+import { SearchBox } from "@/components/SearchBox";
+import { RAGFlow, FlowStep } from "@/components/RAGFlow";
+
+import {
+  MessageSquare, Cpu, Database, FileText,
+  Search, ArrowRight, Bot
+} from "lucide-react";
+
+const getIconForStep = (step: string) => {
+  const map: Record<string, any> = {
+    "User Question": MessageSquare,
+    "Embed Question → Vector": Cpu,
+    "Search Vector DB": Database,
+    "Retrieve Contexts": FileText,
+    "Build Prompt": Search,
+    "Send to LLM": ArrowRight,
+    "LLM Generates Answer": Bot,
+    "Show Answer": MessageSquare,
+  };
+  return map[step] || MessageSquare;
+};
+
 
 const Index = () => {
   const [answer, setAnswer] = useState<Answer | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const [steps, setSteps] = useState<FlowStep[]>([]);
+  const [question, setQuestion] = useState<string>("");
 
   const handleSearch = async (query: string) => {
     setLoading(true);
+    setQuestion(query);
+    setSteps([]);
+    setAnswer(null);
+  
     try {
       const response = await askQuestion(query);
       setAnswer(response);
+  
+      const stepDescriptions: Record<string, string> = {
+        "User Question": "User submitted a question to the system.",
+        "Embed Question → Vector": "Question converted to vector embedding.",
+        "Search Vector DB": "Similar documents found using vector search.",
+        "Retrieve Contexts": "Top text chunks retrieved from database.",
+        "Build Prompt": "Question and context combined to form prompt.",
+        "Send to LLM": "Prompt sent to language model.",
+        "LLM Generates Answer": "LLM generated a contextual answer.",
+        "Show Answer": "Answer shown with source citations."
+      };
+      
+      const mappedSteps: FlowStep[] = response.steps.map((step: any, i: number) => ({
+        id: i,
+        title: step.step,
+        description: stepDescriptions[step.step] || step.step,
+        icon: getIconForStep(step.step),
+        sampleData: step.value,
+      }));
+  
+      setSteps(mappedSteps);
     } catch (error) {
       console.error("Error getting answer:", error);
       toast({
@@ -35,6 +82,7 @@ const Index = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <SidebarProvider defaultOpen={false}>
@@ -116,7 +164,15 @@ const Index = () => {
                   </p>
                 </div>
                 <div className="w-full overflow-x-auto">
-                  <RAGFlow autoPlay={false} />
+                <RAGFlow 
+                    autoPlay={!!steps.length} 
+                    questionText={question} 
+                    initialActiveStep={0} 
+                    stepDelay={1800} 
+                    key={question} 
+                    stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))} // ← optional override support
+                  />
+                  
                 </div>
                 
                 <div className="mt-16 max-w-3xl mx-auto">

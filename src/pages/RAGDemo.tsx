@@ -27,7 +27,7 @@ const RAGDemo = () => {
               </p>
             </motion.div>
             
-            <RAGFlow autoPlay={false} />
+            <RAGFlow autoPlay={true} />
             
             <div className="mt-16 max-w-3xl mx-auto">
               <h2 className="text-2xl font-semibold mb-4">Why RAG Matters</h2>
