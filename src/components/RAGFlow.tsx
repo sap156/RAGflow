@@ -238,8 +238,8 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto pb-6 w-full">
-        <div className="flex flex-nowrap gap-4 min-w-max p-0 justify-center" style={{ minWidth: '100%' }}>
+      <div className="w-full overflow-x-auto pb-6" style={{ scrollbarWidth: 'thin' }}>
+        <div className="flex flex-nowrap gap-4 min-w-max mx-auto justify-start pl-6 pr-6" style={{ minWidth: 'max-content' }}>
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === activeStep;

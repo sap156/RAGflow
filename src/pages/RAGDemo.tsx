@@ -27,8 +27,10 @@ const RAGDemo = () => {
               </p>
             </motion.div>
             
-            <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
-              <RAGFlow autoPlay={true} />
+            <div className="w-full overflow-auto" style={{ maxWidth: '100%' }}>
+              <div className="min-w-[1200px] mx-auto">
+                <RAGFlow autoPlay={true} />
+              </div>
             </div>
             
             <div className="mt-16 max-w-3xl mx-auto">
