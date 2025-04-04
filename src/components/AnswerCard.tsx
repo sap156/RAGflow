@@ -18,7 +18,7 @@ export const AnswerCard = ({ answer }: AnswerCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="glass-card shadow-lg border-0 overflow-hidden mt-6">
+      <Card className="shadow-lg border overflow-hidden mt-6">
         <CardContent className="p-6">
           <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none text-balance">
             {answer.answer.split("\n").map((paragraph, index) => (

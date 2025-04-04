@@ -1,3 +1,4 @@
+
 // components/RAGFlow.tsx
 
 import React, { useState, useEffect } from "react";
@@ -206,10 +207,10 @@ useEffect(() => {
   return (
     <div className="w-full">
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl font-bold text-center bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm inline-block mx-auto">
+        <h2 className="text-2xl font-bold text-center inline-block mx-auto">
           Retrieval-Augmented Generation (RAG) Flow
         </h2>
-        <p className="text-muted-foreground text-center max-w-2xl mx-auto bg-background/70 px-4 py-2 rounded-lg backdrop-blur-sm">
+        <p className="text-muted-foreground text-center max-w-2xl mx-auto">
           This diagram shows how RAG enhances AI responses by retrieving relevant context from a document database.
         </p>
 
@@ -217,7 +218,7 @@ useEffect(() => {
           <Button
             onClick={isPlaying ? handlePause : handlePlay}
             variant="outline"
-            className="gap-2 bg-background/90 backdrop-blur-sm"
+            className="gap-2"
           >
             {isPlaying ? "Pause" : activeStep === steps.length - 1 ? "Restart" : "Play"}
             {isPlaying ? null : <Play className="h-4 w-4" />}
@@ -228,7 +229,6 @@ useEffect(() => {
             variant="outline"
             size="icon"
             disabled={activeStep === 0}
-            className="bg-background/90 backdrop-blur-sm"
           >
             <RefreshCw className="h-4 w-4" />
           </Button>
@@ -260,12 +260,12 @@ useEffect(() => {
                   className="flex flex-col"
                 >
                   <Card
-                    className={`w-72 h-full backdrop-blur-sm ${
+                    className={`w-72 h-full ${
                       isActive
-                        ? "ring-2 ring-primary shadow-lg bg-background/90"
+                        ? "ring-2 ring-primary shadow-lg bg-background"
                         : isPast
-                        ? "bg-background/80"
-                        : "bg-background/70"
+                        ? "bg-background"
+                        : "bg-background"
                     }`}
                   >
                     <CardContent className="p-6 flex flex-col h-full">
@@ -291,7 +291,7 @@ useEffect(() => {
 
                       <Separator className="my-2" />
 
-                      <div className="bg-muted/80 rounded-md p-2 mt-auto">
+                      <div className="bg-muted rounded-md p-2 mt-auto">
                         <p className="text-xs font-mono overflow-hidden text-ellipsis">
                           {step.sampleData}
                         </p>
