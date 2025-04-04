@@ -13,7 +13,7 @@ export const Header = () => {
           transition={{ duration: 0.5 }}
         >
           <SidebarTrigger />
-          <h1 className="text-xl font-semibold tracking-tight">🔮 Ask the Oracle</h1>
+          <h1 className="text-xl font-semibold tracking-tight">RAGflow</h1>
         </motion.div>
       </div>
     </header>

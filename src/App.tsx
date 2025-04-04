@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     // Set document title
-    document.title = "Ask the Oracle";
+    document.title = "RAGflow";
   }, []);
 
   return (

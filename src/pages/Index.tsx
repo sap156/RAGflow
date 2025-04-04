@@ -96,20 +96,29 @@ const Index = () => {
           <Header />
           <div className="container px-4 md:px-6 max-w-6xl mx-auto">
             <div className="flex flex-col items-center py-12 md:py-16 lg:py-20">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-center mb-8 md:mb-12"
-              >
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
-                  Ask the Oracle
-                </h1>
-                <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto text-center">
-                  Upload your documents and get instant, accurate answers powered by wisdom from beyond. 
-                  Ask in natural language and receive enlightened responses.
-                </p>
-              </motion.div>
+            <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.5 }}
+  className="text-center mb-8 md:mb-12"
+>
+  <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
+    RAGflow
+  </h1>
+
+  {/* Tagline */}
+  <p className="text-sm md:text-base font-medium text-muted-foreground mb-4">
+    Ask Smart. See Smarter.
+  </p>
+
+  {/* Force subtext to stay on one line */}
+  <p className="text-muted-foreground md:text-lg mx-auto text-center whitespace-nowrap max-w-full">
+    Upload documents and get instant answers — Watch how RAG works under the hood.
+  </p>
+</motion.div>
+
+
+
 
               <div className="w-full max-w-3xl mx-auto">
                 {/* File Upload Component */}
@@ -135,7 +144,7 @@ const Index = () => {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mt-12 text-center text-foreground"
                   >
-                    <p className="text-center">Ask the Oracle a question to receive wisdom</p>
+                    <p className="text-center">Don’t just ask a question – watch RAGflow bring the answer to life</p>
                   </motion.div>
                 )}
               </div>
@@ -147,12 +156,7 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="w-full mt-16 pt-8 border-t border-border/40 container-full-width"
               >
-                <div className="mb-8">
-                  <h2 className="text-2xl font-semibold mb-2 text-center">How The Oracle Works</h2>
-                  <p className="text-muted-foreground text-center">
-                    This diagram shows how The Oracle uses Retrieval-Augmented Generation to enhance answers with your documents.
-                  </p>
-                </div>
+                
                 <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
                   <RAGFlow 
                     autoPlay={!!steps.length} 

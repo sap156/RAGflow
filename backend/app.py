@@ -4,7 +4,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from datetime import datetime
+import sqlite3
 import uuid
+from rag.config import DB_PATH  # ✅ Add this
 from rag.db import init_db
 from rag.ingestion import process_and_store, extract_text
 from rag.retriever import search_similar_chunks
@@ -132,6 +134,19 @@ def ask():
         # Step 8 - Show Answer
         rag_steps.append({"step": "Show Answer", "value": "Answer displayed to user"})
 
+        # 💾 Save question to history
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute("DELETE FROM history WHERE question = ?", (question,))
+
+        
+        c.execute(
+                 "INSERT INTO history (id, question, answer, timestamp) VALUES (?, ?, ?, ?)",
+                (str(uuid.uuid4()), question, answer, datetime.now().isoformat())
+                )
+        conn.commit()
+        conn.close()
+
         return jsonify({
             "question": question,
             "answer": answer,
@@ -144,22 +159,37 @@ def ask():
         return jsonify({"error": str(e)}), 500
 
 
+
 @app.route("/history")
 def get_history():
-    # Simulated data shaped like your frontend expects
-    fake_history = [
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT id, question, answer, timestamp FROM history ORDER BY timestamp DESC LIMIT 100")
+    rows = c.fetchall()
+    conn.close()
+
+    return jsonify([
         {
-            "id": str(uuid.uuid4()),
-            "question": "What is RAG?",
-            "timestamp": datetime.now().isoformat()
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "question": "How does vector search work?",
-            "timestamp": datetime.now().isoformat()
-        }
-    ]
-    return jsonify(fake_history)
+            "id": row[0],
+            "question": row[1],
+            "answer": row[2],
+            "timestamp": row[3]
+        } for row in rows
+    ])
+
+@app.route("/clear-history", methods=["POST"])
+def clear_history():
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute("DELETE FROM history")
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "History cleared"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 @app.route("/debug")
 def debug():

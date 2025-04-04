@@ -9,6 +9,8 @@ import fitz
 import io
 import numpy as np
 import traceback  # ← Added for detailed error logging
+from PyPDF2 import PdfReader
+import docx
 
 from rag.config import INDEX_PATH, EMBED_MODEL
 from rag.db import save_chunks

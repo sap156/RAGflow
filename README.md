@@ -1,73 +1,139 @@
-# Welcome to your Lovable project
+# 🧠 RAGflow – Visualize Retrieval-Augmented Generation
 
-## Project info
+RAGflow is an interactive web app that lets you upload documents and ask questions, powered by Retrieval-Augmented Generation (RAG). What sets it apart? You don’t just get an answer — you get to **watch the RAG process unfold** visually through a step-by-step flow, from vector embedding to LLM generation.
 
-**URL**: https://lovable.dev/projects/64488015-8199-4340-90d6-effb1c396b05
+## 📽️ Watch RAGflow in Action
+![RAGflow Demo](/media/ragflow-demo.gif)
 
-## How can I edit this code?
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🚀 Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/64488015-8199-4340-90d6-effb1c396b05) and start prompting.
+- **Document Upload:** Supports PDF, DOC, DOCX, TXT
+- **Ask Natural Questions:** Get accurate, context-aware answers
+- **RAG Flow Visualization:** See how the system retrieves, builds prompts, and generates answers
+- **Recent History:** View past questions and revisit them anytime
+- **Auto-scroll Animation:** Follows the flow as the RAG engine processes your input
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🧰 Technologies Used
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Framer Motion
+- **Backend:** Flask, SQLite, FAISS (vector DB), Sentence Transformers
+- **LLM:** OpenAI API (GPT-4o), can use Calude as well.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🛠️ Local Setup Instructions
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 1. Clone the Repository
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+git clone https://github.com/sap156/RAGflow.git
+cd RAGflow
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 2. Install Frontend Dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+---
+
+### 3. Install Backend Dependencies
+
+You must have Python 3.9+ installed.
+
+```bash
+cd ../backend
+python -m venv venv
+source venv/bin/activate      # For Mac/Linux
+# .\venv\Scripts\activate     # For Windows
+
+pip install -r requirements.txt
+```
+
+---
+
+### 4. Set up the `.env` File
+
+Create a file called `.env` in the `backend` directory:
+
+```
+OPENAI_API_KEY=sk-xxxxxxyourapikeyxxxxx
+```
+
+> 🔑 Your OpenAI API key is required for answering questions.
+
+---
+
+### 5. Run the Backend Server
+
+```bash
+from the root folder
+export FLASK_APP=backend/app.py
+export FLASK_ENV=development
+flask run --host=localhost --port=5050
+```
+
+Runs the Flask server on `http://localhost:5050`.
+
+---
+
+### 6. Run the Frontend App
+
+```bash
+cd frontend
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Launches the React app on `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+![RAGflow Home](/public/landing.png)
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🧪 Try It Out
 
-## What technologies are used for this project?
+1. Upload a document.
+2. Ask a question like: “What is this document about?”
+3. Watch the **RAG Flow** in action.
+4. View your **question history** and **clear it anytime**.
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🧼 Optional: Reset Vector Index & DB
 
-## How can I deploy this project?
+If you want a clean slate, delete the contents of the `/backend/data` folder.
 
-Simply open [Lovable](https://lovable.dev/projects/64488015-8199-4340-90d6-effb1c396b05) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## 🌐 Deployment (Optional)
 
-Yes it is!
+You can deploy the app using platforms like:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Frontend:** Vercel, Netlify, or GitHub Pages
+- **Backend:** Render, Railway, or your own VPS
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+## ✨ Future Ideas
+
+- Fine-tuned document tagging
+- Integration with Claude or Mistral
+- Drag-and-drop multi-file upload
+- Chat history export
+
+---
+
+## 🙏 Acknowledgements
+
+- OpenAI for LLMs
+- HuggingFace Transformers & Sentence Transformers
+- FAISS for blazing fast vector search

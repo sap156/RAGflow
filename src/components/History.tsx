@@ -1,9 +1,10 @@
-
 import { useEffect, useState } from "react";
 import { getHistory } from "../services/api";
 import { Question } from "../types/rag";
 import { motion } from "framer-motion";
 import { Clock, Search } from "lucide-react";
+import { clearHistory } from "../services/api";
+
 import { format, parseISO } from "date-fns";
 
 interface HistoryProps {
@@ -33,7 +34,6 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
     fetchHistory();
   }, []);
 
-  // Group questions by date
   const groupedQuestions = history.reduce((groups: Record<string, Question[]>, question) => {
     const date = new Date(question.timestamp).toLocaleDateString();
     if (!groups[date]) {
@@ -58,6 +58,22 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
           <Clock size={18} />
           Recent Questions
         </h2>
+        {history.length > 0 && (
+    <button
+      onClick={async () => {
+        try {
+          await clearHistory();
+          setHistory([]);
+        } catch (e) {
+          console.error(e);
+          setError("Failed to clear history.");
+        }
+      }}
+      className="text-xs text-red-400 hover:text-red-500 transition"
+    >
+      Clear History
+    </button>
+  )}
       </div>
 
       <div className="flex-1 overflow-y-auto sidebar-gradient">

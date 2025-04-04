@@ -1,7 +1,7 @@
 
 // components/RAGFlow.tsx
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   MessageSquare, Search, Database, FileText,
@@ -37,6 +37,8 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
 }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [isPlaying, setIsPlaying] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (autoPlay && stepsOverride.length > 0) {
@@ -185,6 +187,25 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
     setProgress(progressValue);
   }, [activeStep, steps.length]);
 
+  // 👇 Auto-scroll to active step
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    const activeCard = scrollContainer?.querySelector(`[data-step="${activeStep}"]`) as HTMLElement;
+
+    if (scrollContainer && activeCard) {
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const cardRect = activeCard.getBoundingClientRect();
+      const scrollLeft =
+        scrollContainer.scrollLeft +
+        (cardRect.left - containerRect.left - containerRect.width / 2 + cardRect.width / 2);
+
+      scrollContainer.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+    }
+  }, [activeStep]);
+
   const handlePlay = () => {
     if (activeStep === steps.length - 1) {
       setActiveStep(0);
@@ -207,12 +228,12 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
     <div className="w-full">
       <div className="mb-8 space-y-4">
         <h2 className="text-2xl font-bold text-center">
-          Retrieval-Augmented Generation (RAG) Flow
+        Watch the RAGflow in Action
         </h2>
         <p className="text-muted-foreground text-center">
-          This diagram shows how RAG enhances AI responses by retrieving relevant context from a document database.
+        Experience how Retrieval-Augmented Generation works behind the scenes — step by step.
         </p>
-
+  
         <div className="flex items-center justify-center gap-2 mt-4">
           <Button
             onClick={isPlaying ? handlePause : handlePlay}
@@ -222,7 +243,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
             {isPlaying ? "Pause" : activeStep === steps.length - 1 ? "Restart" : "Play"}
             {isPlaying ? null : <Play className="h-4 w-4" />}
           </Button>
-
+  
           <Button
             onClick={handleReset}
             variant="outline"
@@ -232,23 +253,31 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
             <RefreshCw className="h-4 w-4" />
           </Button>
         </div>
-
+  
         <div className="w-full max-w-xl px-0 mx-auto">
           <Progress value={progress} className="h-2" />
         </div>
       </div>
-
-      <div className="w-full overflow-x-auto pb-6" style={{ scrollbarWidth: 'thin' }}>
-        <div className="flex flex-nowrap gap-4 min-w-max mx-auto justify-start pl-6 pr-6" style={{ minWidth: 'max-content', paddingTop: '40px', paddingBottom: '40px' }}>
+  
+      {/* Scroll container with auto-scroll behavior */}
+      <div
+        className="w-full overflow-x-auto pb-6"
+        style={{ scrollbarWidth: "thin" }}
+        ref={scrollContainerRef}
+      >
+        <div
+          className="flex flex-nowrap gap-4 min-w-max mx-auto justify-start pl-6 pr-6"
+          style={{ minWidth: "max-content", paddingTop: "40px", paddingBottom: "40px" }}
+        >
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === activeStep;
             const isPast = index < activeStep;
-            const isFuture = index > activeStep;
-
+  
             return (
               <React.Fragment key={step.id}>
                 <motion.div
+                  data-step={index}
                   initial={{ opacity: 0.7, y: 20 }}
                   animate={{
                     opacity: isActive ? 1 : isPast ? 0.9 : 0.7,
@@ -257,14 +286,12 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                   }}
                   transition={{ duration: 0.3 }}
                   className="flex flex-col"
-                  style={{ marginTop: isActive ? '0px' : '20px' }}
+                  style={{ marginTop: isActive ? "0px" : "20px" }}
                 >
                   <Card
-                    className={`w-72 h-full ${
+                    className={`w-72 h-[340px] ${
                       isActive
                         ? "ring-2 ring-primary shadow-lg bg-background"
-                        : isPast
-                        ? "bg-background"
                         : "bg-background"
                     }`}
                   >
@@ -285,21 +312,23 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                           Step {index + 1}
                         </span>
                       </div>
-
+  
                       <h3 className="font-semibold mb-1 text-center">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4 text-center">{step.description}</p>
-
+                      <p className="text-sm text-muted-foreground mb-4 text-center">
+                        {step.description}
+                      </p>
+  
                       <Separator className="my-2" />
-
+  
                       <div className="bg-muted rounded-md p-2 mt-auto">
-                        <p className="text-xs font-mono overflow-hidden text-ellipsis text-center">
+                        <p className="text-xs font-mono line-clamp-6 overflow-hidden text-ellipsis">
                           {step.sampleData}
                         </p>
                       </div>
                     </CardContent>
                   </Card>
                 </motion.div>
-
+  
                 {index < steps.length - 1 && (
                   <div className="flex items-center justify-center">
                     <motion.div
@@ -319,4 +348,5 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
       </div>
     </div>
   );
+  
 };

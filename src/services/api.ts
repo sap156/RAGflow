@@ -1,3 +1,4 @@
+import { Question } from "../types/rag";
 
 // backend URL
 const BASE_URL = "http://localhost:5050"; // update if needed
@@ -32,13 +33,28 @@ export const askQuestion = async (question: string) => {
   return res.json(); // { answer, sources, steps }
 };
 
-export const getHistory = async () => {
+export async function getHistory(): Promise<Question[]> {
   const res = await fetch("http://localhost:5050/history");
+
   if (!res.ok) {
+    console.error("Failed to fetch history:", res.status, res.statusText);
     throw new Error("Failed to fetch history");
   }
-  return res.json(); // You can format this on the backend too
-};
+
+  const json = await res.json();
+  console.log("✅ History loaded from backend:", json); // <--- Add this
+  return json;
+}
+
+
+export async function clearHistory(): Promise<void> {
+  const res = await fetch("/history", { method: "DELETE" });
+  if (!res.ok) throw new Error("Failed to clear history");
+}
+
+
+
+
 
 export const getAnswer = async (question: string) => {
   const response = await fetch(`${BASE_URL}/ask`, {
