@@ -35,7 +35,16 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   stepsOverride = [],
 }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
-  const [isPlaying, setIsPlaying] = useState(() => autoPlay && initialActiveStep === 0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+useEffect(() => {
+  if (autoPlay && stepsOverride.length > 0) {
+    setIsPlaying(true);
+    setActiveStep(0);
+  }
+}, [autoPlay, stepsOverride]);
+
+  
   const [progress, setProgress] = useState(0);
 
   const stepMap: Record<string, { title: string; description: string; icon: React.ElementType }> = {
