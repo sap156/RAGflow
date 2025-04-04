@@ -3,7 +3,7 @@
 RAGflow is an interactive web app that lets you upload documents and ask questions, powered by Retrieval-Augmented Generation (RAG). What sets it apart? You don’t just get an answer — you get to **watch the RAG process unfold** visually through a step-by-step flow, from vector embedding to LLM generation.
 
 ## 📽️ Watch RAGflow in Action
-![RAGflow Demo](/media/ragflow-demo.gif)
+![RAGflow Demo](/public/media/ragflow-demo.gif)
 
 
 ---
