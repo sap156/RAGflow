@@ -1,3 +1,4 @@
+
 // components/RAGFlow.tsx
 
 import React, { useState, useEffect } from "react";
@@ -205,14 +206,14 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   return (
     <div className="w-full">
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl font-bold text-left">
+        <h2 className="text-2xl font-bold text-center">
           Retrieval-Augmented Generation (RAG) Flow
         </h2>
-        <p className="text-muted-foreground text-left">
+        <p className="text-muted-foreground text-center">
           This diagram shows how RAG enhances AI responses by retrieving relevant context from a document database.
         </p>
 
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex items-center justify-center gap-2 mt-4">
           <Button
             onClick={isPlaying ? handlePause : handlePlay}
             variant="outline"
@@ -232,13 +233,13 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
           </Button>
         </div>
 
-        <div className="w-full max-w-xl px-0">
+        <div className="w-full max-w-xl px-0 mx-auto">
           <Progress value={progress} className="h-2" />
         </div>
       </div>
 
       <div className="overflow-x-auto pb-6 w-full">
-        <div className="flex gap-4 min-w-max p-0">
+        <div className="flex flex-nowrap gap-4 min-w-max p-0 justify-center" style={{ minWidth: '100%' }}>
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === activeStep;
@@ -284,13 +285,13 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                         </span>
                       </div>
 
-                      <h3 className="font-semibold mb-1 text-left">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4 text-left">{step.description}</p>
+                      <h3 className="font-semibold mb-1 text-center">{step.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-4 text-center">{step.description}</p>
 
                       <Separator className="my-2" />
 
                       <div className="bg-muted rounded-md p-2 mt-auto">
-                        <p className="text-xs font-mono overflow-hidden text-ellipsis text-left">
+                        <p className="text-xs font-mono overflow-hidden text-ellipsis text-center">
                           {step.sampleData}
                         </p>
                       </div>

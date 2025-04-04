@@ -41,7 +41,7 @@
   color: #888;
 }
 
-/* Text alignment correction */
+/* Text alignment classes */
 .text-left {
   text-align: left;
 }
@@ -53,3 +53,11 @@
 .text-right {
   text-align: right;
 }
+
+/* Full width container */
+.container-full-width {
+  max-width: 100% !important;
+  width: 100%;
+  padding: 0;
+}
+

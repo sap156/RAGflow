@@ -20,9 +20,9 @@ export const AnswerCard = ({ answer }: AnswerCardProps) => {
     >
       <Card className="shadow-lg border overflow-hidden mt-6">
         <CardContent className="p-6">
-          <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none text-balance text-left">
+          <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none text-balance text-center">
             {answer.answer.split("\n").map((paragraph, index) => (
-              <p key={index} className="text-left">{paragraph}</p>
+              <p key={index} className="text-center">{paragraph}</p>
             ))}
           </div>
 
@@ -46,7 +46,7 @@ export const AnswerCard = ({ answer }: AnswerCardProps) => {
 
       {answer.sources && answer.sources.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-sm font-medium text-muted-foreground mb-3 text-left">Sources ({answer.sources.length})</h3>
+          <h3 className="text-sm font-medium text-muted-foreground mb-3 text-center">Sources ({answer.sources.length})</h3>
           <div className="space-y-3">
             {answer.sources.map((source, index) => (
               <SourceCard key={index} source={source} index={index} />
@@ -72,12 +72,12 @@ const SourceCard = ({ source, index }: { source: Source; index: number }) => {
               <File size={16} />
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="font-medium text-sm truncate text-left">{source.title || "Document source"}</h4>
-              <div className="text-sm text-muted-foreground mt-1 text-ellipsis overflow-hidden line-clamp-2 text-left">
+              <h4 className="font-medium text-sm truncate text-center">{source.title || "Document source"}</h4>
+              <div className="text-sm text-muted-foreground mt-1 text-ellipsis overflow-hidden line-clamp-2 text-center">
                 {source.content}
               </div>
               {source.source && (
-                <div className="flex items-center gap-1 mt-2 text-xs text-primary text-left">
+                <div className="flex items-center justify-center gap-1 mt-2 text-xs text-primary">
                   <Link size={12} />
                   <span className="truncate">{source.source}</span>
                 </div>

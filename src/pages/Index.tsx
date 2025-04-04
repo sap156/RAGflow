@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { askQuestion } from "../services/api";
 import { Answer } from "../types/rag";
@@ -104,7 +105,7 @@ const Index = () => {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
                   Ask the Oracle
                 </h1>
-                <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
+                <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto text-center">
                   Upload your documents and get instant, accurate answers powered by wisdom from beyond. 
                   Ask in natural language and receive enlightened responses.
                 </p>
@@ -134,7 +135,7 @@ const Index = () => {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mt-12 text-center text-foreground"
                   >
-                    <p>Ask the Oracle a question to receive wisdom</p>
+                    <p className="text-center">Ask the Oracle a question to receive wisdom</p>
                   </motion.div>
                 )}
               </div>
@@ -144,15 +145,15 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="w-full mt-16 pt-8 border-t border-border/40"
+                className="w-full mt-16 pt-8 border-t border-border/40 container-full-width"
               >
                 <div className="mb-8">
-                  <h2 className="text-2xl font-semibold mb-2 text-left">How The Oracle Works</h2>
-                  <p className="text-muted-foreground text-left">
+                  <h2 className="text-2xl font-semibold mb-2 text-center">How The Oracle Works</h2>
+                  <p className="text-muted-foreground text-center">
                     This diagram shows how The Oracle uses Retrieval-Augmented Generation to enhance answers with your documents.
                   </p>
                 </div>
-                <div className="w-full overflow-x-auto">
+                <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
                   <RAGFlow 
                     autoPlay={!!steps.length} 
                     questionText={question} 
@@ -164,15 +165,15 @@ const Index = () => {
                 </div>
                 
                 <div className="mt-16 max-w-3xl mx-auto">
-                  <h2 className="text-2xl font-semibold mb-4 text-left">Why RAG Matters</h2>
-                  <p className="text-muted-foreground mb-4 text-left">
+                  <h2 className="text-2xl font-semibold mb-4 text-center">Why RAG Matters</h2>
+                  <p className="text-muted-foreground mb-4 text-center">
                     RAG systems combine the knowledge from your documents with the intelligence of large language models. 
                     This gives you the best of both worlds: accurate, contextual answers based on your specific content.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2 text-left">Benefits</h3>
-                      <ul className="space-y-2 text-sm text-left">
+                      <h3 className="font-medium mb-2 text-center">Benefits</h3>
+                      <ul className="space-y-2 text-sm text-center">
                         <li>• Answers grounded in your actual documents</li>
                         <li>• Reduced hallucinations and fabricated information</li>
                         <li>• Citations to verify information sources</li>
@@ -180,8 +181,8 @@ const Index = () => {
                       </ul>
                     </div>
                     <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2 text-left">Applications</h3>
-                      <ul className="space-y-2 text-sm text-left">
+                      <h3 className="font-medium mb-2 text-center">Applications</h3>
+                      <ul className="space-y-2 text-sm text-center">
                         <li>• Company knowledge bases and documentation</li>
                         <li>• Legal and compliance document search</li>
                         <li>• Research paper and academic assistance</li>
@@ -200,8 +201,8 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 <div className="flex flex-col items-center">
-                  <h2 className="text-xl font-semibold mb-4 text-foreground">Connect With Me</h2>
-                  <div className="flex flex-wrap justify-center gap-4 mb-6">
+                  <h2 className="text-xl font-semibold mb-4 text-foreground text-center">Connect With Me</h2>
+                  <div className="flex flex-wrap justify-center gap-4 mb-6 text-center">
                     <a 
                       href="https://www.linkedin.com/in/abhinavneni/" 
                       target="_blank" 
@@ -237,7 +238,7 @@ const Index = () => {
                       <span>Medium Blog</span>
                     </a>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground text-center">
                     © {new Date().getFullYear()} Created by Sai Abhinav Parvathaneni
                   </p>
                 </div>
