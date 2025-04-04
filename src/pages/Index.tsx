@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { askQuestion } from "../services/api";
 import { Answer } from "../types/rag";
@@ -95,7 +94,7 @@ const Index = () => {
         <main className="flex-1 pt-16 pb-12">
           <Header />
           <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-            <div className="flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
+            <div className="flex flex-col items-center py-12 md:py-16 lg:py-20">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -140,41 +139,40 @@ const Index = () => {
                 )}
               </div>
               
-              {/* RAG Flow Section - Now with full width */}
+              {/* RAG Flow Section */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="w-full mt-16 pt-8 border-t border-border/40"
               >
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-semibold mb-2 inline-block">How The Oracle Works</h2>
-                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-semibold mb-2 text-left">How The Oracle Works</h2>
+                  <p className="text-muted-foreground text-left">
                     This diagram shows how The Oracle uses Retrieval-Augmented Generation to enhance answers with your documents.
                   </p>
                 </div>
                 <div className="w-full overflow-x-auto">
-                <RAGFlow 
+                  <RAGFlow 
                     autoPlay={!!steps.length} 
                     questionText={question} 
                     initialActiveStep={0} 
                     stepDelay={1800} 
                     key={question} 
-                    stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))} // ← optional override support
+                    stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))}
                   />
-                  
                 </div>
                 
                 <div className="mt-16 max-w-3xl mx-auto">
-                  <h2 className="text-2xl font-semibold mb-4 inline-block">Why RAG Matters</h2>
-                  <p className="text-muted-foreground mb-4">
+                  <h2 className="text-2xl font-semibold mb-4 text-left">Why RAG Matters</h2>
+                  <p className="text-muted-foreground mb-4 text-left">
                     RAG systems combine the knowledge from your documents with the intelligence of large language models. 
                     This gives you the best of both worlds: accurate, contextual answers based on your specific content.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2">Benefits</h3>
-                      <ul className="space-y-2 text-sm">
+                      <h3 className="font-medium mb-2 text-left">Benefits</h3>
+                      <ul className="space-y-2 text-sm text-left">
                         <li>• Answers grounded in your actual documents</li>
                         <li>• Reduced hallucinations and fabricated information</li>
                         <li>• Citations to verify information sources</li>
@@ -182,8 +180,8 @@ const Index = () => {
                       </ul>
                     </div>
                     <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2">Applications</h3>
-                      <ul className="space-y-2 text-sm">
+                      <h3 className="font-medium mb-2 text-left">Applications</h3>
+                      <ul className="space-y-2 text-sm text-left">
                         <li>• Company knowledge bases and documentation</li>
                         <li>• Legal and compliance document search</li>
                         <li>• Research paper and academic assistance</li>
@@ -201,7 +199,7 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center">
                   <h2 className="text-xl font-semibold mb-4 text-foreground">Connect With Me</h2>
                   <div className="flex flex-wrap justify-center gap-4 mb-6">
                     <a 

@@ -1,4 +1,3 @@
-
 // components/RAGFlow.tsx
 
 import React, { useState, useEffect } from "react";
@@ -38,14 +37,13 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [isPlaying, setIsPlaying] = useState(false);
 
-useEffect(() => {
-  if (autoPlay && stepsOverride.length > 0) {
-    setIsPlaying(true);
-    setActiveStep(0);
-  }
-}, [autoPlay, stepsOverride]);
+  useEffect(() => {
+    if (autoPlay && stepsOverride.length > 0) {
+      setIsPlaying(true);
+      setActiveStep(0);
+    }
+  }, [autoPlay, stepsOverride]);
 
-  
   const [progress, setProgress] = useState(0);
 
   const stepMap: Record<string, { title: string; description: string; icon: React.ElementType }> = {
@@ -207,14 +205,14 @@ useEffect(() => {
   return (
     <div className="w-full">
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl font-bold text-center inline-block mx-auto">
+        <h2 className="text-2xl font-bold text-left">
           Retrieval-Augmented Generation (RAG) Flow
         </h2>
-        <p className="text-muted-foreground text-center max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-left">
           This diagram shows how RAG enhances AI responses by retrieving relevant context from a document database.
         </p>
 
-        <div className="flex items-center justify-center gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-4">
           <Button
             onClick={isPlaying ? handlePause : handlePlay}
             variant="outline"
@@ -234,13 +232,13 @@ useEffect(() => {
           </Button>
         </div>
 
-        <div className="w-full max-w-xl mx-auto px-4">
+        <div className="w-full max-w-xl px-0">
           <Progress value={progress} className="h-2" />
         </div>
       </div>
 
       <div className="overflow-x-auto pb-6 w-full">
-        <div className="flex gap-4 min-w-max p-4">
+        <div className="flex gap-4 min-w-max p-0">
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === activeStep;
@@ -286,13 +284,13 @@ useEffect(() => {
                         </span>
                       </div>
 
-                      <h3 className="font-semibold mb-1">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
+                      <h3 className="font-semibold mb-1 text-left">{step.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-4 text-left">{step.description}</p>
 
                       <Separator className="my-2" />
 
                       <div className="bg-muted rounded-md p-2 mt-auto">
-                        <p className="text-xs font-mono overflow-hidden text-ellipsis">
+                        <p className="text-xs font-mono overflow-hidden text-ellipsis text-left">
                           {step.sampleData}
                         </p>
                       </div>
