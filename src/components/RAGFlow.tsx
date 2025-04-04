@@ -239,7 +239,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
       </div>
 
       <div className="w-full overflow-x-auto pb-6" style={{ scrollbarWidth: 'thin' }}>
-        <div className="flex flex-nowrap gap-4 min-w-max mx-auto justify-start pl-6 pr-6" style={{ minWidth: 'max-content' }}>
+        <div className="flex flex-nowrap gap-4 min-w-max mx-auto justify-start pl-6 pr-6" style={{ minWidth: 'max-content', paddingTop: '40px', paddingBottom: '40px' }}>
           {steps.map((step, index) => {
             const StepIcon = step.icon;
             const isActive = index === activeStep;
@@ -257,6 +257,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
                   }}
                   transition={{ duration: 0.3 }}
                   className="flex flex-col"
+                  style={{ marginTop: isActive ? '0px' : '20px' }}
                 >
                   <Card
                     className={`w-72 h-full ${
