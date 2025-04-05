@@ -1,11 +1,12 @@
+
 import { useEffect, useState } from "react";
 import { getHistory } from "../services/api";
 import { Question } from "../types/rag";
 import { motion } from "framer-motion";
-import { Clock, Search } from "lucide-react";
+import { Clock, Search, Trash2 } from "lucide-react";
 import { clearHistory } from "../services/api";
-
 import { format, parseISO } from "date-fns";
+import { toast } from "@/hooks/use-toast";
 
 interface HistoryProps {
   onSelectQuestion: (question: string) => void;
@@ -34,6 +35,25 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
     fetchHistory();
   }, []);
 
+  const handleClearHistory = async () => {
+    try {
+      await clearHistory();
+      setHistory([]);
+      toast({
+        title: "History cleared",
+        description: "Your question history has been cleared successfully."
+      });
+    } catch (e) {
+      console.error(e);
+      setError("Failed to clear history.");
+      toast({
+        title: "Error",
+        description: "Failed to clear history. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const groupedQuestions = history.reduce((groups: Record<string, Question[]>, question) => {
     const date = new Date(question.timestamp).toLocaleDateString();
     if (!groups[date]) {
@@ -59,21 +79,14 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
           Recent Questions
         </h2>
         {history.length > 0 && (
-    <button
-      onClick={async () => {
-        try {
-          await clearHistory();
-          setHistory([]);
-        } catch (e) {
-          console.error(e);
-          setError("Failed to clear history.");
-        }
-      }}
-      className="text-xs text-red-400 hover:text-red-500 transition"
-    >
-      Clear History
-    </button>
-  )}
+          <button
+            onClick={handleClearHistory}
+            className="mt-2 flex items-center gap-1 text-xs text-red-400 hover:text-red-500 transition"
+          >
+            <Trash2 size={14} />
+            Clear History
+          </button>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto sidebar-gradient">

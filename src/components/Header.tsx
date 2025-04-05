@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
-import { Info, Home, BookOpen } from "lucide-react";
+import { Info, Home } from "lucide-react";
 
 export const Header = () => {
   const location = useLocation();
@@ -36,20 +36,6 @@ export const Header = () => {
               >
                 <Home className="w-4 h-4 mr-2" />
                 Home
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link 
-                to="/demo"
-                className={cn(
-                  "flex items-center px-4 py-2 text-sm font-medium transition-colors hover:text-primary",
-                  location.pathname === "/demo" 
-                    ? "text-primary font-semibold"
-                    : "text-foreground/70"
-                )}
-              >
-                <BookOpen className="w-4 h-4 mr-2" />
-                Demo
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
