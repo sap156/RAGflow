@@ -77,8 +77,9 @@ OPENAI_API_KEY=sk-xxxxxxyourapikeyxxxxx
 
 ```bash
 from the root folder
-export FLASK_APP=backend/app.py
+export FLASK_APP=backend.app
 export FLASK_ENV=development
+export PYTHONPATH=backend
 flask run --host=localhost --port=5050
 ```
 
