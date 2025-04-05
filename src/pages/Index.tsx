@@ -96,29 +96,26 @@ const Index = () => {
           <Header />
           <div className="container px-4 md:px-6 max-w-6xl mx-auto">
             <div className="flex flex-col items-center py-12 md:py-16 lg:py-20">
-            <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ duration: 0.5 }}
-  className="text-center mb-8 md:mb-12"
->
-  <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
-    RAGflow
-  </h1>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center mb-8 md:mb-12"
+              >
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
+                  RAGflow
+                </h1>
 
-  {/* Tagline */}
-  <p className="text-sm md:text-base font-medium text-muted-foreground mb-4">
-    Ask Smart. See Smarter.
-  </p>
+                {/* Tagline */}
+                <p className="text-sm md:text-base font-medium text-muted-foreground mb-4">
+                  Ask Smart. See Smarter.
+                </p>
 
-  {/* Force subtext to stay on one line */}
-  <p className="text-muted-foreground md:text-lg mx-auto text-center whitespace-nowrap max-w-full">
-    Upload documents and get instant answers — Watch how RAG works under the hood.
-  </p>
-</motion.div>
-
-
-
+                {/* Force subtext to stay on one line */}
+                <p className="text-muted-foreground md:text-lg mx-auto text-center whitespace-nowrap max-w-full">
+                  Upload documents and get instant answers — Watch how RAG works under the hood.
+                </p>
+              </motion.div>
 
               <div className="w-full max-w-3xl mx-auto">
                 {/* File Upload Component */}
@@ -144,7 +141,7 @@ const Index = () => {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mt-12 text-center text-foreground"
                   >
-                    <p className="text-center">Don’t just ask a question – watch RAGflow bring the answer to life</p>
+                    <p className="text-center">Don't just ask a question – watch RAGflow bring the answer to life</p>
                   </motion.div>
                 )}
               </div>
@@ -156,7 +153,6 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="w-full mt-16 pt-8 border-t border-border/40 container-full-width"
               >
-                
                 <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
                   <RAGFlow 
                     autoPlay={!!steps.length} 
@@ -166,34 +162,6 @@ const Index = () => {
                     key={question} 
                     stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))}
                   />
-                </div>
-                
-                <div className="mt-16 max-w-3xl mx-auto">
-                  <h2 className="text-2xl font-semibold mb-4 text-center">Why RAG Matters</h2>
-                  <p className="text-muted-foreground mb-4 text-center">
-                    RAG systems combine the knowledge from your documents with the intelligence of large language models. 
-                    This gives you the best of both worlds: accurate, contextual answers based on your specific content.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2 text-center">Benefits</h3>
-                      <ul className="space-y-2 text-sm text-center">
-                        <li>• Answers grounded in your actual documents</li>
-                        <li>• Reduced hallucinations and fabricated information</li>
-                        <li>• Citations to verify information sources</li>
-                        <li>• Up-to-date knowledge not limited to LLM training data</li>
-                      </ul>
-                    </div>
-                    <div className="bg-accent p-6 rounded-lg border border-border/50">
-                      <h3 className="font-medium mb-2 text-center">Applications</h3>
-                      <ul className="space-y-2 text-sm text-center">
-                        <li>• Company knowledge bases and documentation</li>
-                        <li>• Legal and compliance document search</li>
-                        <li>• Research paper and academic assistance</li>
-                        <li>• Technical support and troubleshooting</li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
               </motion.div>
               

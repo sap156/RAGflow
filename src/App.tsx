@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import RAGDemo from "./pages/RAGDemo";
+import Info from "./pages/Info";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/demo" element={<RAGDemo />} />
+            <Route path="/info" element={<Info />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
