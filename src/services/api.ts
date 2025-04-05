@@ -47,9 +47,20 @@ export async function getHistory(): Promise<Question[]> {
 }
 
 
-export async function clearHistory(): Promise<void> {
-  const res = await fetch("/history", { method: "DELETE" });
-  if (!res.ok) throw new Error("Failed to clear history");
+export async function clearHistory() {
+  const res = await fetch("http://localhost:5050/clear-history", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to clear history");
+  }
+
+  return res.json();
 }
 
 

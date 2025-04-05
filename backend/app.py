@@ -187,8 +187,8 @@ def clear_history():
         conn.close()
         return jsonify({"message": "History cleared"}), 200
     except Exception as e:
+        print("❌ Failed to clear history:", e)
         return jsonify({"error": str(e)}), 500
-
 
 
 @app.route("/debug")
