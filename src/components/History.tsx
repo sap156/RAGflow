@@ -78,15 +78,6 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
           <Clock size={18} />
           Recent Questions
         </h2>
-        {history.length > 0 && (
-          <button
-            onClick={handleClearHistory}
-            className="mt-2 flex items-center gap-1 text-xs text-red-400 hover:text-red-500 transition"
-          >
-            <Trash2 size={14} />
-            Clear History
-          </button>
-        )}
       </div>
 
       <div className="flex-1 overflow-y-auto sidebar-gradient">
@@ -136,6 +127,19 @@ export const History = ({ onSelectQuestion }: HistoryProps) => {
           </div>
         )}
       </div>
+      
+      {/* Clear History Button at the bottom */}
+      {history.length > 0 && (
+        <div className="p-4 border-t border-sidebar-border mt-auto">
+          <button
+            onClick={handleClearHistory}
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-md transition-all"
+          >
+            <Trash2 size={16} />
+            <span>Clear History</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
