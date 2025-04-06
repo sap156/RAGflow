@@ -1,6 +1,3 @@
-
-// components/RAGFlow.tsx
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,6 +23,7 @@ export interface RAGFlowProps {
   stepDelay?: number;
   questionText?: string;
   stepsOverride?: { step: string; value: string }[];
+  onFlowComplete?: () => void;
 }
 
 export const RAGFlow: React.FC<RAGFlowProps> = ({
@@ -34,11 +32,11 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   stepDelay = 2000,
   questionText = "How does tokenization affect RAG systems?",
   stepsOverride = [],
+  onFlowComplete,
 }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [isPlaying, setIsPlaying] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     if (autoPlay && stepsOverride.length > 0) {
@@ -46,6 +44,12 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
       setActiveStep(0);
     }
   }, [autoPlay, stepsOverride]);
+
+  useEffect(() => {
+    if (activeStep === steps.length - 1 && !isPlaying && onFlowComplete && steps.length > 0) {
+      onFlowComplete();
+    }
+  }, [activeStep, isPlaying, steps.length, onFlowComplete]);
 
   const [progress, setProgress] = useState(0);
 
@@ -187,7 +191,6 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
     setProgress(progressValue);
   }, [activeStep, steps.length]);
 
-  // 👇 Auto-scroll to active step
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     const activeCard = scrollContainer?.querySelector(`[data-step="${activeStep}"]`) as HTMLElement;
@@ -348,5 +351,4 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
       </div>
     </div>
   );
-  
 };

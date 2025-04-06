@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { askQuestion } from "../services/api";
 import { Answer } from "../types/rag";
 import { useToast } from "@/components/ui/use-toast";
@@ -7,7 +7,7 @@ import { SidebarProvider, Sidebar, SidebarContent } from "@/components/ui/sideba
 import { AnswerCard } from "@/components/AnswerCard";
 import { History } from "@/components/History";
 import { Header } from "@/components/Header";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Linkedin, Mail, Github, ExternalLink } from "lucide-react";
 import { FileUpload } from "@/components/FileUpload";
 import { SearchBox } from "@/components/SearchBox";
@@ -39,16 +39,28 @@ const Index = () => {
   const { toast } = useToast();
   const [steps, setSteps] = useState<FlowStep[]>([]);
   const [question, setQuestion] = useState<string>("");
+  const [flowComplete, setFlowComplete] = useState(false);
+  const [responseData, setResponseData] = useState<Answer | null>(null);
+
+  // Reset flow completion status when starting a new question
+  useEffect(() => {
+    if (loading) {
+      setFlowComplete(false);
+    }
+  }, [loading]);
 
   const handleSearch = async (query: string) => {
     setLoading(true);
     setQuestion(query);
     setSteps([]);
     setAnswer(null);
+    setFlowComplete(false);
+    setResponseData(null);
   
     try {
       const response = await askQuestion(query);
-      setAnswer(response);
+      // Store the response but don't show it yet
+      setResponseData(response);
   
       const stepDescriptions: Record<string, string> = {
         "User Question": "User submitted a question to the system.",
@@ -77,9 +89,17 @@ const Index = () => {
         description: "Failed to get an answer. Please try again.",
         variant: "destructive",
       });
+      setFlowComplete(true); // Ensure we don't get stuck in loading state
     } finally {
       setLoading(false);
     }
+  };
+
+  // Handle the flow completion
+  const handleFlowComplete = () => {
+    setFlowComplete(true);
+    // Now we can show the answer
+    setAnswer(responseData);
   };
   
 
@@ -131,10 +151,8 @@ const Index = () => {
                 {/* Search Box */}
                 <SearchBox onSearch={handleSearch} loading={loading} />
                 
-                {/* Answer Card */}
-                <AnswerCard answer={answer} />
-                
-                {!answer && !loading && (
+                {/* Prompt when no answer */}
+                {!loading && steps.length === 0 && (
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -146,24 +164,42 @@ const Index = () => {
                 )}
               </div>
               
-              {/* RAG Flow Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="w-full mt-16 pt-8 border-t border-border/40 container-full-width"
-              >
-                <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
-                  <RAGFlow 
-                    autoPlay={!!steps.length} 
-                    questionText={question} 
-                    initialActiveStep={0} 
-                    stepDelay={1800} 
-                    key={question} 
-                    stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))}
-                  />
-                </div>
-              </motion.div>
+              {/* RAG Flow Section - Now positioned between search and answer */}
+              {steps.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="w-full mt-10 container-full-width"
+                >
+                  <div className="w-full overflow-x-auto" style={{ maxWidth: '100vw', paddingLeft: '0', paddingRight: '0' }}>
+                    <RAGFlow 
+                      autoPlay={!!steps.length} 
+                      questionText={question} 
+                      initialActiveStep={0} 
+                      stepDelay={1800} 
+                      key={question} 
+                      stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))}
+                      onFlowComplete={handleFlowComplete}
+                    />
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Answer Card - Only show after flow is complete */}
+              <AnimatePresence>
+                {flowComplete && answer && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full max-w-3xl mx-auto mt-8"
+                  >
+                    <AnswerCard answer={answer} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               
               {/* Footer */}
               <motion.footer 
