@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
@@ -38,21 +39,9 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (autoPlay && stepsOverride.length > 0) {
-      setIsPlaying(true);
-      setActiveStep(0);
-    }
-  }, [autoPlay, stepsOverride]);
-
-  useEffect(() => {
-    if (activeStep === steps.length - 1 && !isPlaying && onFlowComplete && steps.length > 0) {
-      onFlowComplete();
-    }
-  }, [activeStep, isPlaying, steps.length, onFlowComplete]);
-
   const [progress, setProgress] = useState(0);
-
+  
+  // Define stepMap before using it
   const stepMap: Record<string, { title: string; description: string; icon: React.ElementType }> = {
     "User Question": {
       title: "User Question",
@@ -96,6 +85,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
     },
   };
 
+  // Define steps after stepMap
   const steps: FlowStep[] = stepsOverride.length > 0
     ? stepsOverride.map((step, idx) => {
         const meta = stepMap[step.step] || {
@@ -169,6 +159,19 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
           sampleData: "Answer displayed with references to source documents",
         },
       ];
+
+  useEffect(() => {
+    if (autoPlay && stepsOverride.length > 0) {
+      setIsPlaying(true);
+      setActiveStep(0);
+    }
+  }, [autoPlay, stepsOverride]);
+
+  useEffect(() => {
+    if (activeStep === steps.length - 1 && !isPlaying && onFlowComplete && steps.length > 0) {
+      onFlowComplete();
+    }
+  }, [activeStep, isPlaying, steps.length, onFlowComplete]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
