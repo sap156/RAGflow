@@ -39,6 +39,8 @@ const Index = () => {
   const { toast } = useToast();
   const [steps, setSteps] = useState<FlowStep[]>([]);
   const [question, setQuestion] = useState<string>("");
+  const [ragFlowComplete, setRagFlowComplete] = useState(false);
+
 
   const handleSearch = async (query: string) => {
     setLoading(true);
@@ -130,24 +132,14 @@ const Index = () => {
                 
                 {/* Search Box */}
                 <SearchBox onSearch={handleSearch} loading={loading} />
+                <p className="text-center text-muted-foreground mt-4">
+           Don't just ask a question — watch RAGflow bring the answer to life.
+         </p>
                 
-                {/* Answer Card */}
-                <AnswerCard answer={answer} />
-                
-                {!answer && !loading && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="mt-12 text-center text-foreground"
-                  >
-                    <p className="text-center">Don't just ask a question – watch RAGflow bring the answer to life</p>
-                  </motion.div>
-                )}
-              </div>
-              
-              {/* RAG Flow Section */}
+
+                {/* RAG Flow Section */}
               <motion.div
+              
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
@@ -161,9 +153,29 @@ const Index = () => {
                     stepDelay={1800} 
                     key={question} 
                     stepsOverride={steps.map(step => ({ step: step.title, value: step.sampleData }))}
+                    onComplete={() => setRagFlowComplete(true)}
                   />
                 </div>
+                
               </motion.div>
+                
+                {/* Answer Card */}
+                {ragFlowComplete && <AnswerCard answer={answer} />}
+
+                
+                {!answer && !loading && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="mt-12 text-center text-foreground"
+                  >
+                    
+                  </motion.div>
+                )}
+              </div>
+              
+              
               
               {/* Footer */}
               <motion.footer 

@@ -26,6 +26,7 @@ export interface RAGFlowProps {
   stepDelay?: number;
   questionText?: string;
   stepsOverride?: { step: string; value: string }[];
+  onComplete?: () => void; // ✅ NEW
 }
 
 export const RAGFlow: React.FC<RAGFlowProps> = ({
@@ -34,6 +35,7 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
   stepDelay = 2000,
   questionText = "How does tokenization affect RAG systems?",
   stepsOverride = [],
+  onComplete,
 }) => {
   const [activeStep, setActiveStep] = useState(initialActiveStep);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -166,21 +168,29 @@ export const RAGFlow: React.FC<RAGFlowProps> = ({
         },
       ];
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    if (isPlaying) {
-      intervalId = setInterval(() => {
-        setActiveStep((prev) => {
-          if (prev < steps.length - 1) return prev + 1;
-          setIsPlaying(false);
-          return prev;
-        });
-      }, stepDelay);
-    }
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [isPlaying, steps.length, stepDelay]);
+      useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+      
+        if (isPlaying) {
+          intervalId = setInterval(() => {
+            setActiveStep((prev) => {
+              if (prev < steps.length - 1) {
+                return prev + 1;
+              } else {
+                setIsPlaying(false);
+                if (onComplete) onComplete(); // ✅ Trigger callback
+                clearInterval(intervalId); // Stop autoplay once complete
+                return prev;
+              }
+            });
+          }, stepDelay);
+        }
+      
+        return () => {
+          if (intervalId) clearInterval(intervalId);
+        };
+      }, [isPlaying, steps.length, stepDelay, onComplete]);
+      
 
   useEffect(() => {
     const progressValue = ((activeStep + 1) / steps.length) * 100;
